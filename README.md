@@ -1,5 +1,8 @@
 # Python Acoustic Echo Cancellation Library
 
+![screenshot](https://github.com/Keyvanhardani/Python-Acoustic-Echo-Cancellation-Library/blob/main/logo.png?raw=true)
+
+
 ## Description
 This project implements adaptive filter algorithms for **Acoustic Echo Cancellation (AEC)** and general audio processing. The library includes adaptive filtering algorithms such as:
 - **LMS (Least Mean Squares)**
