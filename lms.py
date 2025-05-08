@@ -1,6 +1,13 @@
 import numpy as np
 
-def lms_filter(desired_signal, reference_input, filter_coeff, step_sizes, num_iterations=1001):
+# -----------------------------------------------------------------
+# Rückwärtskompatibilität: lms_filter_safe als Wrapper
+# -----------------------------------------------------------------
+def lms_filter_safe(*args, **kwargs):
+    # Delegiert an lms_filter
+    return lms_filter(*args, **kwargs)
+
+def lms_filter(desired_signal, reference_input, filter_coeff, step_sizes, num_iterations=1001, return_error=True, safe=False):
     """
     LMS (Least Mean Squares) adaptive filter implementation.
 
@@ -32,6 +39,8 @@ def lms_filter(desired_signal, reference_input, filter_coeff, step_sizes, num_it
             y = np.dot(f_adaptive_temp, u_block)
             e[l] = desired_signal[l] - y
             # Update filter coefficients
+        if safe:
+            e[l] = np.clip(e[l], -1e4, 1e4)
             f_adaptive_temp += step_size * e[l] * u_block
 
         # Calculate total error
@@ -41,7 +50,7 @@ def lms_filter(desired_signal, reference_input, filter_coeff, step_sizes, num_it
             f_adaptive = f_adaptive_temp
             best_step_size = step_size
 
-    return f_adaptive, best_step_size
+    return (e if return_error else None), f_adaptive, best_step_size
 
 # Beispiel-Test: Zufallsdaten für den LMS-Filter
 desired_signal = np.random.randn(1000)  # Beispiel: gewünschtes Signal

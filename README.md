@@ -99,3 +99,11 @@ plt.xlabel('Samples')
 plt.ylabel('Amplitude')
 plt.legend()
 plt.show()
+
+
+
+```bash
+# Live‑AEC Demo
+pip install sounddevice
+python mic_demo.py
+```

@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+update_aec_repo.py
 # C extensions
 *.so
 

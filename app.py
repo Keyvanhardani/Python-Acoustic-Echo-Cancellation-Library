@@ -1,7 +1,7 @@
 import scipy.io.wavfile as wav
 import numpy as np
 import matplotlib.pyplot as plt
-from lms import lms_filter_safe  # Assuming lms_filter_safe is implemented in the lms module
+from lms import lms_filter  # Assuming lms_filter_safe is implemented in the lms module
 
 def normalize_signal(signal):
     """
@@ -31,11 +31,11 @@ def process_wav_file(input_wav_path, output_wav_path):
     - output_wav_path: Path to save the processed WAV file
     """
     # Load the WAV file
-    fs, audio_data = wav.read(input_wav_path)
+    fs, audio_data = audio_data.astype(np.float32)  # Int16 -> Float32 wav.read(input_wav_path)
     
     # If stereo, convert to mono by averaging the channels
     if len(audio_data.shape) > 1:
-        audio_data = np.mean(audio_data, axis=1)
+        audio_data = audio_data.astype(np.float32)  # Int16 -> Float32 np.mean(audio_data, axis=1)
     
     # Apply LMS filter for Acoustic Echo Cancellation
     filter_coeff = np.random.randn(10)  # Initial filter coefficients
